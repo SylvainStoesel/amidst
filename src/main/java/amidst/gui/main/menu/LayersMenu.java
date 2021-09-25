@@ -16,6 +16,7 @@ import amidst.documentation.CalledOnlyBy;
 import amidst.documentation.NotThreadSafe;
 import amidst.fragment.layer.LayerIds;
 import amidst.gui.main.viewer.ViewerFacade;
+import amidst.logging.AmidstLogger;
 import amidst.mojangapi.world.Dimension;
 import amidst.settings.Setting;
 
@@ -25,6 +26,7 @@ public class LayersMenu {
 	private final AmidstSettings settings;
 	private final Setting<Dimension> dimensionSetting;
 	private final List<JMenuItem> overworldMenuItems = new LinkedList<>();
+	private final List<JMenuItem> netherMenuItems = new LinkedList<>();
 	private final List<JMenuItem> endMenuItems = new LinkedList<>();
 	private volatile ViewerFacade viewerFacade;
 
@@ -50,6 +52,7 @@ public class LayersMenu {
 	private void createMenu(Dimension selectedDimension) {
 		menu.removeAll();
 		overworldMenuItems.clear();
+		netherMenuItems.clear();
 		endMenuItems.clear();
 		createDimensionLayers(selectedDimension);
 		menu.setEnabled(true);
@@ -60,9 +63,7 @@ public class LayersMenu {
 		if (viewerFacade.hasLayer(LayerIds.END_ISLANDS)) {
 			createAllDimensions();
 			menu.addSeparator();
-			createOverworldAndEndLayers(dimension);
-		} else if (!dimension.equals(Dimension.OVERWORLD)) {
-			dimensionSetting.set(Dimension.OVERWORLD);
+			createOverworldAndNetherAndEndLayers(dimension);
 		} else {
 			createAllDimensions();
 			menu.addSeparator();
@@ -71,14 +72,20 @@ public class LayersMenu {
 	}
 
 	@CalledOnlyBy(AmidstThread.EDT)
-	private void createOverworldAndEndLayers(Dimension dimension) {
+	private void createOverworldAndNetherAndEndLayers(Dimension dimension) {
 		// @formatter:off
 		ButtonGroup group = new ButtonGroup();
 		Menus.radio(   menu, dimensionSetting, group,     Dimension.OVERWORLD,                                      MenuShortcuts.DISPLAY_DIMENSION_OVERWORLD);
 		createOverworldLayers(dimension);
 		menu.addSeparator();
 		Menus.radio(   menu, dimensionSetting, group,     Dimension.END,                                            MenuShortcuts.DISPLAY_DIMENSION_END);
-		endLayer(      settings.showEndCities,            "End City Icons",         getIcon("end_city.png"),        MenuShortcuts.SHOW_END_CITIES, dimension, LayerIds.END_CITY);
+		endLayer(      settings.showEndCities,            "End City Icons",        getIcon("end_city.png"),        MenuShortcuts.SHOW_END_CITIES,              dimension,        LayerIds.END_CITY);
+		menu.addSeparator();
+		if (viewerFacade.hasLayer(LayerIds.NETHER_BIOME_DATA)) {
+			Menus.radio(menu, dimensionSetting, group, Dimension.NETHER, MenuShortcuts.DISPLAY_DIMENSION_NETHER);
+			netherLayer(settings.showNetherFortresses,    "Fortress Icons",        getIcon("nether_fortress.png"), MenuShortcuts.SHOW_NETHER_FORTRESSES,       Dimension.NETHER, LayerIds.NETHER_FORTRESS);
+			netherLayer(settings.showNetherBastionRemnants,"Bastion Remnant Icons",getIcon("bastion_remnant.png"), MenuShortcuts.SHOW_NETHER_BASTION_REMNANTS, Dimension.NETHER, LayerIds.NETHER_BASTION_REMNANT);
+		}
 		// @formatter:on
 	}
 
@@ -94,7 +101,7 @@ public class LayersMenu {
 		overworldLayer(settings.showOceanMonuments,       "Ocean Monument Icons",   getIcon("ocean_monument.png"),  MenuShortcuts.SHOW_OCEAN_MONUMENTS,   dimension, LayerIds.OCEAN_MONUMENT);
 		overworldLayer(settings.showWoodlandMansions,     "Woodland Mansion Icons", getIcon("woodland_mansion.png"),MenuShortcuts.SHOW_WOODLAND_MANSIONS, dimension, LayerIds.WOODLAND_MANSION);
 		overworldLayer(settings.showOceanFeatures,        "Ocean Features Icons",   getIcon("shipwreck.png"),       MenuShortcuts.SHOW_OCEAN_FEATURES,    dimension, LayerIds.OCEAN_FEATURES);
-		overworldLayer(settings.showNetherFortresses,     "Nether Features Icons",  getIcon("nether_fortress.png"), MenuShortcuts.SHOW_NETHER_FEATURES,   dimension, LayerIds.NETHER_FEATURES);
+		overworldLayer(settings.showNetherFeatures,       "Nether Features Icons",  getIcon("nether_fortress.png"), MenuShortcuts.SHOW_NETHER_FEATURES,   dimension, LayerIds.NETHER_FEATURES);
 		// @formatter:on
 	}
 
@@ -126,6 +133,17 @@ public class LayersMenu {
 			Dimension dimension,
 			int layerId) {
 		endMenuItems.add(createLayer(setting, text, icon, menuShortcut, dimension, layerId));
+	}
+
+	@CalledOnlyBy(AmidstThread.EDT)
+	public void netherLayer(
+			Setting<Boolean> setting,
+			String text,
+			ImageIcon icon,
+			MenuShortcut menuShortcut,
+			Dimension dimension,
+			int layerId) {
+		netherMenuItems.add(createLayer(setting, text, icon, menuShortcut, dimension, layerId));
 	}
 
 	@CalledOnlyBy(AmidstThread.EDT)

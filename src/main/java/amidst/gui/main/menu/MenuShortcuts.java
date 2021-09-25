@@ -33,6 +33,7 @@ public enum MenuShortcuts implements MenuShortcut {
 
 	DISPLAY_DIMENSION_OVERWORLD("menu shift 1"),
 	DISPLAY_DIMENSION_END("menu shift 2"),
+	DISPLAY_DIMENSION_NETHER("menu shift 3"),
 
 	SHOW_SLIME_CHUNKS("menu 1"),
 	SHOW_WORLD_SPAWN("menu 2"),
@@ -44,6 +45,8 @@ public enum MenuShortcuts implements MenuShortcut {
 	SHOW_WOODLAND_MANSIONS("menu 8"),
 	SHOW_OCEAN_FEATURES("menu 9"),
 	SHOW_NETHER_FEATURES("menu 0"),
+	SHOW_NETHER_FORTRESSES("menu 1"),
+	SHOW_NETHER_BASTION_REMNANTS("menu 2"),
 
 	// It's okay to duplicate the Overworld layers shortcuts here, because
 	// the End layers will never be active at the same time.

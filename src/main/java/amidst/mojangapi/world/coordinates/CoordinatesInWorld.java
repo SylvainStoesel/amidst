@@ -62,6 +62,13 @@ public class CoordinatesInWorld implements Comparable<CoordinatesInWorld> {
 		return targetResolution.convertFromWorldToThis(yInWorld);
 	}
 
+	public CoordinatesInWorld getAs(Resolution targetResolution) {
+		if (targetResolution != Resolution.WORLD) {
+			return new CoordinatesInWorld(this.getXAs(targetResolution), this.getYAs(targetResolution));
+		}
+		else return this;
+	}
+
 	public long getXCornerOfFragment() {
 		return CoordinateUtils.toFragmentCorner(xInWorld);
 	}

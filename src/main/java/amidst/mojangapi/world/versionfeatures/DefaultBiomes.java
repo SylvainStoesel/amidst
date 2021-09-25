@@ -284,15 +284,15 @@ public enum DefaultBiomes {
 			new Biome("Modified Wooded Badlands Plateau", 38, PLATEAU),
 			new Biome("Modified Badlands Plateau", 39, PLATEAU)
 		).sinceExtend(RecognisedVersion._18w43a,
-			new Biome(168, "Bamboo Jungle", PLAINS),
-			new Biome(169, "Bamboo Jungle Hills", HILLS)
+			new Biome(bambooJungle, "Bamboo Jungle", PLAINS),
+			new Biome(bambooJungleHills, "Bamboo Jungle Hills", HILLS)
 		).sinceExtend(RecognisedVersion._20w06a,
-			new Biome(8, "Nether Wastes", PLAINS),
-			new Biome(170, "Soul Sand Valley", PLAINS),
-			new Biome(171, "Crimson Forest", PLAINS),
-			new Biome(172, "Warped Forest", PLAINS)
+			new Biome(hell, "Nether Wastes", PLAINS),
+			new Biome(soulSandValley, "Soul Sand Valley", PLAINS),
+			new Biome(crimsonForest, "Crimson Forest", PLAINS),
+			new Biome(warpedForest, "Warped Forest", PLAINS)
 		).sinceExtend(RecognisedVersion._20w15a,
-			new Biome(173, "Basalt Deltas", PLAINS)
+			new Biome(basaltDeltas, "Basalt Deltas", PLAINS)
 		).construct().andThen(BiomeList::new);
 		// @formatter:on
 }

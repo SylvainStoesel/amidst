@@ -174,6 +174,10 @@ public enum DefaultVersionFeatures {
 					LayerIds.WOODLAND_MANSION
 				).sinceExtend(RecognisedVersion._18w09a,
 					LayerIds.OCEAN_FEATURES
+				).sinceExtend(RecognisedVersion._20w16a,
+					LayerIds.NETHER_BIOME_DATA,
+					LayerIds.NETHER_BASTION_REMNANT,
+					LayerIds.NETHER_FORTRESS
 				).construct())
 
 			.with(FeatureKey.BIOME_LIST, DefaultBiomes.DEFAULT_BIOMES)

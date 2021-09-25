@@ -84,23 +84,26 @@ public class LayerBuilder {
 	private List<LayerDeclaration> createDeclarations(AmidstSettings settings, List<Integer> enabledLayers) {
 		LayerDeclaration[] declarations = new LayerDeclaration[LayerIds.NUMBER_OF_LAYERS];
 		// @formatter:off
-		declare(settings, declarations, enabledLayers, LayerIds.ALPHA,           null,                false, Setting.createImmutable(true));
-		declare(settings, declarations, enabledLayers, LayerIds.BIOME_DATA,      Dimension.OVERWORLD, false, Setting.createImmutable(true));
-		declare(settings, declarations, enabledLayers, LayerIds.END_ISLANDS,     Dimension.END,       false, Setting.createImmutable(true));
-		declare(settings, declarations, enabledLayers, LayerIds.BACKGROUND,      null,                false, Setting.createImmutable(true));
-		declare(settings, declarations, enabledLayers, LayerIds.SLIME,           Dimension.OVERWORLD, false, settings.showSlimeChunks);
-		declare(settings, declarations, enabledLayers, LayerIds.GRID,            null,                true,  settings.showGrid);
-		declare(settings, declarations, enabledLayers, LayerIds.SPAWN,           Dimension.OVERWORLD, false, settings.showSpawn);
-		declare(settings, declarations, enabledLayers, LayerIds.STRONGHOLD,      Dimension.OVERWORLD, false, settings.showStrongholds);
-		declare(settings, declarations, enabledLayers, LayerIds.PLAYER,          null,                false, settings.showPlayers);
-		declare(settings, declarations, enabledLayers, LayerIds.VILLAGE,         Dimension.OVERWORLD, false, settings.showVillages);
-		declare(settings, declarations, enabledLayers, LayerIds.TEMPLE,          Dimension.OVERWORLD, false, settings.showTemples);
-		declare(settings, declarations, enabledLayers, LayerIds.MINESHAFT,       Dimension.OVERWORLD, false, settings.showMineshafts);
-		declare(settings, declarations, enabledLayers, LayerIds.OCEAN_MONUMENT,  Dimension.OVERWORLD, false, settings.showOceanMonuments);
-		declare(settings, declarations, enabledLayers, LayerIds.WOODLAND_MANSION,Dimension.OVERWORLD, false, settings.showWoodlandMansions);
-		declare(settings, declarations, enabledLayers, LayerIds.OCEAN_FEATURES,  Dimension.OVERWORLD, false, settings.showOceanFeatures);
-		declare(settings, declarations, enabledLayers, LayerIds.NETHER_FEATURES, Dimension.OVERWORLD, false, settings.showNetherFortresses);
-		declare(settings, declarations, enabledLayers, LayerIds.END_CITY,        Dimension.END,       false, settings.showEndCities);
+		declare(settings, declarations, enabledLayers, LayerIds.ALPHA,            null,                 false, Setting.createImmutable(true));
+		declare(settings, declarations, enabledLayers, LayerIds.BIOME_DATA,        Dimension.OVERWORLD, false, Setting.createImmutable(true));
+		declare(settings, declarations, enabledLayers, LayerIds.NETHER_BIOME_DATA, Dimension.NETHER,    false, Setting.createImmutable(true));
+		declare(settings, declarations, enabledLayers, LayerIds.END_ISLANDS,       Dimension.END,       false, Setting.createImmutable(true));
+		declare(settings, declarations, enabledLayers, LayerIds.BACKGROUND,        null,                false, Setting.createImmutable(true));
+		declare(settings, declarations, enabledLayers, LayerIds.SLIME,             Dimension.OVERWORLD, false, settings.showSlimeChunks);
+		declare(settings, declarations, enabledLayers, LayerIds.GRID,              null,                true,  settings.showGrid);
+		declare(settings, declarations, enabledLayers, LayerIds.SPAWN,             Dimension.OVERWORLD, false, settings.showSpawn);
+		declare(settings, declarations, enabledLayers, LayerIds.STRONGHOLD,        Dimension.OVERWORLD, false, settings.showStrongholds);
+		declare(settings, declarations, enabledLayers, LayerIds.PLAYER,            null,                false, settings.showPlayers);
+		declare(settings, declarations, enabledLayers, LayerIds.VILLAGE,           Dimension.OVERWORLD, false, settings.showVillages);
+		declare(settings, declarations, enabledLayers, LayerIds.TEMPLE,            Dimension.OVERWORLD, false, settings.showTemples);
+		declare(settings, declarations, enabledLayers, LayerIds.MINESHAFT,         Dimension.OVERWORLD, false, settings.showMineshafts);
+		declare(settings, declarations, enabledLayers, LayerIds.OCEAN_MONUMENT,    Dimension.OVERWORLD, false, settings.showOceanMonuments);
+		declare(settings, declarations, enabledLayers, LayerIds.WOODLAND_MANSION,  Dimension.OVERWORLD, false, settings.showWoodlandMansions);
+		declare(settings, declarations, enabledLayers, LayerIds.OCEAN_FEATURES,    Dimension.OVERWORLD, false, settings.showOceanFeatures);
+		declare(settings, declarations, enabledLayers, LayerIds.NETHER_FEATURES,   Dimension.OVERWORLD, false, settings.showNetherFeatures);
+		declare(settings, declarations, enabledLayers, LayerIds.NETHER_FORTRESS,   Dimension.NETHER,    false, settings.showNetherFortresses);
+		declare(settings, declarations, enabledLayers, LayerIds.NETHER_BASTION_REMNANT,   Dimension.NETHER,    false, settings.showNetherBastionRemnants);
+		declare(settings, declarations, enabledLayers, LayerIds.END_CITY,          Dimension.END,       false, settings.showEndCities);
 		// @formatter:on
 		return Collections.unmodifiableList(Arrays.asList(declarations));
 	}
@@ -131,22 +134,25 @@ public class LayerBuilder {
 			AmidstSettings settings) {
 		// @formatter:off
 		return Collections.unmodifiableList(Arrays.asList(
-				new AlphaInitializer( declarations.get(LayerIds.ALPHA),           settings.fragmentFading),
-				new BiomeDataLoader(  declarations.get(LayerIds.BIOME_DATA),      world.getOverworldBiomeDataOracle()),
-				new EndIslandsLoader( declarations.get(LayerIds.END_ISLANDS),     world.getEndIslandOracle()),
-				new ImageLoader(	  declarations.get(LayerIds.BACKGROUND),      Resolution.QUARTER, new BackgroundColorProvider(new BiomeColorProvider(biomeSelection, settings.biomeProfileSelection), new TheEndColorProvider())),
-				new ImageLoader(      declarations.get(LayerIds.SLIME),           Resolution.CHUNK,   new SlimeColorProvider(world.getSlimeChunkOracle())),
-				new WorldIconLoader<>(declarations.get(LayerIds.SPAWN),           world.getSpawnProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.STRONGHOLD),      world.getStrongholdProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.PLAYER),          world.getPlayerProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.VILLAGE),         world.getVillageProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.TEMPLE),          world.getTempleProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.MINESHAFT),       world.getMineshaftProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.OCEAN_MONUMENT),  world.getOceanMonumentProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.WOODLAND_MANSION),world.getWoodlandMansionProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.OCEAN_FEATURES),  world.getOceanFeaturesProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.NETHER_FEATURES), world.getNetherFortressProducer()),
-				new WorldIconLoader<>(declarations.get(LayerIds.END_CITY),        world.getEndCityProducer(), Fragment::getEndIslands)
+				new AlphaInitializer( declarations.get(LayerIds.ALPHA),                  settings.fragmentFading),
+				new BiomeDataLoader(  declarations.get(LayerIds.BIOME_DATA),             world.getOverworldBiomeDataOracle()),
+				new BiomeDataLoader(  declarations.get(LayerIds.NETHER_BIOME_DATA),      world.getNetherBiomeDataOracle().orElse(null)),
+				new EndIslandsLoader( declarations.get(LayerIds.END_ISLANDS),            world.getEndIslandOracle()),
+				new ImageLoader(	  declarations.get(LayerIds.BACKGROUND),             Resolution.QUARTER, new BackgroundColorProvider(new BiomeColorProvider(biomeSelection, settings.biomeProfileSelection), new TheEndColorProvider())),
+				new ImageLoader(      declarations.get(LayerIds.SLIME),                  Resolution.CHUNK,   new SlimeColorProvider(world.getSlimeChunkOracle())),
+				new WorldIconLoader<>(declarations.get(LayerIds.SPAWN),                  world.getSpawnProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.STRONGHOLD),             world.getStrongholdProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.PLAYER),                 world.getPlayerProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.VILLAGE),                world.getVillageProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.TEMPLE),                 world.getTempleProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.MINESHAFT),              world.getMineshaftProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.OCEAN_MONUMENT),         world.getOceanMonumentProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.WOODLAND_MANSION),       world.getWoodlandMansionProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.OCEAN_FEATURES),         world.getOceanFeaturesProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.NETHER_FEATURES),        world.getNetherFeatureProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.NETHER_FORTRESS),        world.getNetherFortressProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.NETHER_BASTION_REMNANT), world.getNetherBastionRemnantProducer()),
+				new WorldIconLoader<>(declarations.get(LayerIds.END_CITY),               world.getEndCityProducer(), Fragment::getEndIslands)
 		));
 		// @formatter:on
 	}
@@ -176,6 +182,8 @@ public class LayerBuilder {
 				new WorldIconDrawer(declarations.get(LayerIds.WOODLAND_MANSION),zoom, worldIconSelection, settings.useHybridScaling),
 				new WorldIconDrawer(declarations.get(LayerIds.OCEAN_FEATURES),  zoom, worldIconSelection, settings.useHybridScaling),
 				new WorldIconDrawer(declarations.get(LayerIds.NETHER_FEATURES), zoom, worldIconSelection, settings.useHybridScaling),
+				new WorldIconDrawer(declarations.get(LayerIds.NETHER_FORTRESS), zoom, worldIconSelection, settings.useHybridScaling),
+				new WorldIconDrawer(declarations.get(LayerIds.NETHER_BASTION_REMNANT), zoom, worldIconSelection, settings.useHybridScaling),
 				new WorldIconDrawer(declarations.get(LayerIds.END_CITY),        zoom, worldIconSelection, settings.useHybridScaling)
 		));
 		// @formatter:on

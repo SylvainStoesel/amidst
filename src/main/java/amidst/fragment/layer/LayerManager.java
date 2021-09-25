@@ -34,7 +34,7 @@ public class LayerManager {
 		for (LayerDeclaration declaration : declarations) {
 			if (declaration.update(dimension)) {
 				int layerId = declaration.getLayerId();
-				if (layerId == LayerIds.BIOME_DATA || layerId == LayerIds.END_ISLANDS) {
+				if (layerId == LayerIds.BIOME_DATA || layerId == LayerIds.END_ISLANDS || layerId == LayerIds.NETHER_BIOME_DATA) {
 					invalidateLayer(LayerIds.BACKGROUND);
 				}
 				invalidateLayer(layerId);

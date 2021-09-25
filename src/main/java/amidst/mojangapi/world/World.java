@@ -36,7 +36,9 @@ public class World {
 	private final WorldIconProducer<Void> oceanMonumentProducer;
 	private final WorldIconProducer<Void> woodlandMansionProducer;
 	private final WorldIconProducer<Void> oceanFeaturesProducer;
+	private final WorldIconProducer<Void> netherFeatureProducer;
 	private final WorldIconProducer<Void> netherFortressProducer;
+	private final WorldIconProducer<Void> netherBastionRemnantProducer;
 	private final WorldIconProducer<List<EndIsland>> endCityProducer;
 
 	public World(
@@ -58,7 +60,9 @@ public class World {
 			WorldIconProducer<Void> oceanMonumentProducer,
 			WorldIconProducer<Void> woodlandMansionProducer,
 			WorldIconProducer<Void> oceanFeaturesProducer,
+			WorldIconProducer<Void> netherFeatureProducer,
 			WorldIconProducer<Void> netherFortressProducer,
+			WorldIconProducer<Void> netherBastionRemnantProducer,
 			WorldIconProducer<List<EndIsland>> endCityProducer) {
 		this.worldOptions = worldOptions;
 		this.movablePlayerList = movablePlayerList;
@@ -78,7 +82,9 @@ public class World {
 		this.oceanMonumentProducer = oceanMonumentProducer;
 		this.woodlandMansionProducer = woodlandMansionProducer;
 		this.oceanFeaturesProducer = oceanFeaturesProducer;
+		this.netherFeatureProducer = netherFeatureProducer;
 		this.netherFortressProducer = netherFortressProducer;
+		this.netherBastionRemnantProducer = netherBastionRemnantProducer;
 		this.endCityProducer = endCityProducer;
 	}
 
@@ -146,8 +152,16 @@ public class World {
 		return oceanMonumentProducer;
 	}
 
+	public WorldIconProducer<Void> getNetherFeatureProducer() {
+		return netherFeatureProducer;
+	}
+
 	public WorldIconProducer<Void> getNetherFortressProducer() {
 		return netherFortressProducer;
+	}
+
+	public WorldIconProducer<Void> getNetherBastionRemnantProducer() {
+		return netherBastionRemnantProducer;
 	}
 
 	public WorldIconProducer<List<EndIsland>> getEndCityProducer() {

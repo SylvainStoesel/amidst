@@ -26,7 +26,9 @@ public class AmidstSettings {
 	public final Setting<Boolean> showOceanMonuments;
 	public final Setting<Boolean> showWoodlandMansions;
 	public final Setting<Boolean> showOceanFeatures;
+	public final Setting<Boolean> showNetherFeatures;
 	public final Setting<Boolean> showNetherFortresses;
+	public final Setting<Boolean> showNetherBastionRemnants;
 	public final Setting<Boolean> showEndCities;
 
 	public final Setting<Boolean> smoothScrolling;
@@ -53,36 +55,38 @@ public class AmidstSettings {
 	@CalledOnlyBy(AmidstThread.EDT)
 	public AmidstSettings(Preferences preferences) {
 		// @formatter:off
-		dimension                  = Setting.createDimension(preferences, "dimension",            Dimension.OVERWORLD);
-		showGrid                   = Setting.createBoolean(  preferences, "grid",                 false);
-		showSlimeChunks            = Setting.createBoolean(  preferences, "slimeChunks",          false);
-		showSpawn                  = Setting.createBoolean(  preferences, "spawnIcon",            true);
-		showStrongholds            = Setting.createBoolean(  preferences, "strongholdIcons",      true);
-		showPlayers                = Setting.createBoolean(  preferences, "playerIcons",          true);
-		showVillages               = Setting.createBoolean(  preferences, "villageIcons",         true);
-		showTemples                = Setting.createBoolean(  preferences, "templeIcons",          true);
-		showMineshafts             = Setting.createBoolean(  preferences, "mineshaftIcons",       false);
-		showOceanMonuments         = Setting.createBoolean(  preferences, "oceanMonumentIcons",   true);
-		showWoodlandMansions       = Setting.createBoolean(  preferences, "woodlandMansionIcons", true);
-		showOceanFeatures          = Setting.createBoolean(  preferences, "oceanFeaturesIcons",   true);
-		showNetherFortresses       = Setting.createBoolean(  preferences, "netherFortressIcons",  false);
-		showEndCities              = Setting.createBoolean(  preferences, "endCityIcons",         false);
+		dimension                  = Setting.createDimension(preferences, "dimension",                Dimension.OVERWORLD);
+		showGrid                   = Setting.createBoolean(  preferences, "grid",                     false);
+		showSlimeChunks            = Setting.createBoolean(  preferences, "slimeChunks",              false);
+		showSpawn                  = Setting.createBoolean(  preferences, "spawnIcon",                true);
+		showStrongholds            = Setting.createBoolean(  preferences, "strongholdIcons",          true);
+		showPlayers                = Setting.createBoolean(  preferences, "playerIcons",              true);
+		showVillages               = Setting.createBoolean(  preferences, "villageIcons",             true);
+		showTemples                = Setting.createBoolean(  preferences, "templeIcons",              true);
+		showMineshafts             = Setting.createBoolean(  preferences, "mineshaftIcons",           false);
+		showOceanMonuments         = Setting.createBoolean(  preferences, "oceanMonumentIcons",       true);
+		showWoodlandMansions       = Setting.createBoolean(  preferences, "woodlandMansionIcons",     true);
+		showOceanFeatures          = Setting.createBoolean(  preferences, "oceanFeaturesIcons",       true);
+		showNetherFeatures         = Setting.createBoolean(  preferences, "netherFortressIcons",      false);
+		showNetherFortresses       = Setting.createBoolean(  preferences, "netherFortressIcons",      true);
+		showNetherBastionRemnants  = Setting.createBoolean(  preferences, "netherBastionRemnantIcons",true);
+		showEndCities              = Setting.createBoolean(  preferences, "endCityIcons",             false);
 
-		smoothScrolling            = Setting.createBoolean(  preferences, "mapFlicking",          true);
-		fragmentFading             = Setting.createBoolean(  preferences, "mapFading",            true);
-		maxZoom                    = Setting.createBoolean(  preferences, "maxZoom",              true);
-		showFPS                    = Setting.createBoolean(  preferences, "showFPS",              true);
-		showScale                  = Setting.createBoolean(  preferences, "showScale",            true);
-		showDebug                  = Setting.createBoolean(  preferences, "showDebug",            false);
-		useHybridScaling           = Setting.createBoolean(  preferences, "useHybridScaling",     true);
-		threads                    = Setting.createInteger(  preferences, "threads",              (Runtime.getRuntime().availableProcessors() / 2) + 1);
-		lookAndFeel                = Setting.createEnum(     preferences, "lookAndFeel",          AmidstLookAndFeel.DEFAULT);
+		smoothScrolling            = Setting.createBoolean(  preferences, "mapFlicking",              true);
+		fragmentFading             = Setting.createBoolean(  preferences, "mapFading",                true);
+		maxZoom                    = Setting.createBoolean(  preferences, "maxZoom",                  true);
+		showFPS                    = Setting.createBoolean(  preferences, "showFPS",                  true);
+		showScale                  = Setting.createBoolean(  preferences, "showScale",                true);
+		showDebug                  = Setting.createBoolean(  preferences, "showDebug",                false);
+		useHybridScaling           = Setting.createBoolean(  preferences, "useHybridScaling",         true);
+		threads                    = Setting.createInteger(  preferences, "threads",                  (Runtime.getRuntime().availableProcessors() / 2) + 1);
+		lookAndFeel                = Setting.createEnum(     preferences, "lookAndFeel",              AmidstLookAndFeel.DEFAULT);
 
-		lastProfile                = Setting.createString(   preferences, "profile",              "");
-		worldType                  = Setting.createString(   preferences, "worldType",            WorldType.PROMPT_EACH_TIME);
+		lastProfile                = Setting.createString(   preferences, "profile",                  "");
+		worldType                  = Setting.createString(   preferences, "worldType",                WorldType.PROMPT_EACH_TIME);
 		
-		lastBiomeExportPath        = Setting.createString(   preferences, "lastBiomeExportPath",  "");
-		lastScreenshotPath         = Setting.createString(   preferences, "lastScreenshotPath",   "");
+		lastBiomeExportPath        = Setting.createString(   preferences, "lastBiomeExportPath",      "");
+		lastScreenshotPath         = Setting.createString(   preferences, "lastScreenshotPath",       "");
 		
 		biomeProfileSelection = new BiomeProfileSelection(BiomeProfile.getDefaultProfile());
 		// @formatter:on

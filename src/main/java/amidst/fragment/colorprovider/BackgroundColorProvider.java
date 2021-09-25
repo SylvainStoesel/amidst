@@ -18,7 +18,7 @@ public class BackgroundColorProvider implements ColorProvider {
 
 	@Override
 	public int getColorAt(Dimension dimension, Fragment fragment, long cornerX, long cornerY, int x, int y) {
-		if (dimension.equals(Dimension.OVERWORLD)) {
+		if (dimension.equals(Dimension.OVERWORLD) || dimension.equals(Dimension.NETHER)) {
 			return biomeColorProvider.getColorAt(dimension, fragment, cornerX, cornerY, x, y);
 		} else if (dimension.equals(Dimension.END)) {
 			return theEndColorProvider.getColorAt(dimension, fragment, cornerX, cornerY, x, y);
